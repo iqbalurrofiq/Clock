@@ -29,10 +29,10 @@ function App() {
                 iconName = 'earth';
                 break;
               case 'Timer':
-                iconName = 'timer';
+                iconName = 'timer-sand';
                 break;
               case 'Stopwatch':
-                iconName = 'stopwatch';
+                iconName = 'timer';
                 break;
               default:
                 iconName = 'help-circle';
