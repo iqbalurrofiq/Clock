@@ -112,7 +112,7 @@ function TimerScreen() {
           placeholderTextColor="#888" // Warna placeholder
           value={hours}
           onChangeText={handleHoursChange}
-        /
+        />
         <Text>:</Text>
         <TextInput
           style={styles.input}
