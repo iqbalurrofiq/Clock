@@ -1,10 +1,18 @@
-import React, {useState} from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 
 function TimerScreen() {
   const [hours, setHours] = useState('');
   const [minutes, setMinutes] = useState('');
   const [seconds, setSeconds] = useState('');
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef(null);
 
   const handleHoursChange = text => {
     const num = parseInt(text, 10);
@@ -33,13 +41,60 @@ function TimerScreen() {
     }
   };
 
+  const startTimer = () => {
+    if (intervalRef.current) {
+      return;
+    }
+
+    setIsRunning(true);
+    intervalRef.current = setInterval(() => {
+      setSeconds(prev => {
+        let sec = parseInt(prev, 10);
+        let min = parseInt(minutes, 10);
+        let hr = parseInt(hours, 10);
+
+        if (sec > 0) {
+          return (sec - 1).toString().padStart(2, '0');
+        } else if (min > 0) {
+          setMinutes((min - 1).toString().padStart(2, '0'));
+          return '59';
+        } else if (hr > 0) {
+          setHours((hr - 1).toString().padStart(2, '0'));
+          setMinutes('59');
+          return '59';
+        } else {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+          setIsRunning(false);
+          return '00';
+        }
+      });
+    }, 1000);
+  };
+
+  const pauseTimer = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    setIsRunning(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
+
   return (
     <View style={{flex: 1}}>
       <View style={styles.timerContainer}>
         <TextInput
           style={styles.input}
           keyboardType="numeric"
-          placeholder="HH"
+          placeholder="H"
           value={hours}
           onChangeText={handleHoursChange}
         />
@@ -47,7 +102,7 @@ function TimerScreen() {
         <TextInput
           style={styles.input}
           keyboardType="numeric"
-          placeholder="MM"
+          placeholder="M"
           value={minutes}
           onChangeText={handleMinutesChange}
         />
@@ -55,13 +110,20 @@ function TimerScreen() {
         <TextInput
           style={styles.input}
           keyboardType="numeric"
-          placeholder="SS"
+          placeholder="S"
           value={seconds}
           onChangeText={handleSecondsChange}
         />
       </View>
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Text>Timer Screen</Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={isRunning ? pauseTimer : startTimer}>
+          <Text style={styles.buttonText}>{isRunning ? 'Pause' : 'Play'}</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -85,6 +147,23 @@ const styles = StyleSheet.create({
     fontSize: 58,
     fontWeight: 'bold',
     color: 'blue',
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    marginBottom: 50,
+  },
+  button: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
   },
 });
 
