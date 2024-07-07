@@ -48,7 +48,16 @@ function App() {
               />
             );
           },
-        })}>
+          tabBarStyle: {
+            backgroundColor: 'transparent',
+            position: 'absolute',
+            borderTopWidth: 0,
+            elevation: 0,
+          },
+        })}
+        tabBarOptions={{
+          showLabel: false, // Optional: Hide labels if you want only icons
+        }}>
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Alarm" component={AlarmScreen} />
         <Tab.Screen name="World Clock" component={WorldClockScreen} />

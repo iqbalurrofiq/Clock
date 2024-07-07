@@ -5,6 +5,7 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 
 function TimerScreen() {
@@ -17,7 +18,7 @@ function TimerScreen() {
   const handleHoursChange = text => {
     const sanitizedText = text.replace(/[^0-9]/g, '');
     const num = parseInt(sanitizedText, 10);
-    if (!isNaN(num) && num >= 0 && num <= 24) {
+    if (!isNaN(num) && num >= 0 && num <= 99) {
       setHours(sanitizedText);
     } else if (sanitizedText === '') {
       setHours('');
@@ -103,56 +104,62 @@ function TimerScreen() {
   }, []);
 
   return (
-    <View style={{flex: 1}}>
-      <View style={styles.timerContainer}>
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          placeholder="00"
-          placeholderTextColor="#888" // Warna placeholder
-          value={hours}
-          onChangeText={handleHoursChange}
-        />
-        <Text>:</Text>
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          placeholder="00"
-          placeholderTextColor="#888" // Warna placeholder
-          value={minutes}
-          onChangeText={handleMinutesChange}
-        />
-        <Text>:</Text>
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          placeholder="00"
-          placeholderTextColor="#888" // Warna placeholder
-          value={seconds}
-          onChangeText={handleSecondsChange}
-        />
-      </View>
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Timer Screen</Text>
-      </View>
-      <View style={styles.buttonContainer}>
-        <View style={styles.leftButtonContainer}>
-          <TouchableOpacity style={styles.resetButton} onPress={resetTimer}>
-            <Text style={styles.resetButtonText}>Reset</Text>
-          </TouchableOpacity>
+    <ImageBackground
+      source={{
+        uri: 'https://images.unsplash.com/photo-1435224654926-ecc9f7fa028c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGdhbGF4eSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D',
+      }}
+      style={{flex: 1}}>
+      <View style={{flex: 1}}>
+        <View style={styles.timerContainer}>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            placeholder="00"
+            placeholderTextColor="#888"
+            value={hours}
+            onChangeText={handleHoursChange}
+          />
+          <Text>:</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            placeholder="00"
+            placeholderTextColor="#888"
+            value={minutes}
+            onChangeText={handleMinutesChange}
+          />
+          <Text>:</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            placeholder="00"
+            placeholderTextColor="#888"
+            value={seconds}
+            onChangeText={handleSecondsChange}
+          />
         </View>
-        <View style={styles.centerButtonContainer}>
-          <TouchableOpacity
-            style={styles.playPauseButton}
-            onPress={isRunning ? pauseTimer : startTimer}>
-            <Text style={styles.playPauseButtonText}>
-              {isRunning ? 'Pause' : 'Play'}
-            </Text>
-          </TouchableOpacity>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <Text>Timer Screen</Text>
         </View>
-        <View style={styles.rightButtonContainer} />
+        <View style={styles.buttonContainer}>
+          <View style={styles.leftButtonContainer}>
+            <TouchableOpacity style={styles.resetButton} onPress={resetTimer}>
+              <Text style={styles.resetButtonText}>Reset</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.centerButtonContainer}>
+            <TouchableOpacity
+              style={styles.playPauseButton}
+              onPress={isRunning ? pauseTimer : startTimer}>
+              <Text style={styles.playPauseButtonText}>
+                {isRunning ? 'Pause' : 'Play'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.rightButtonContainer} />
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -166,14 +173,14 @@ const styles = StyleSheet.create({
   input: {
     width: 100,
     height: 100,
-    borderColor: '#333',
+    borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 20,
     textAlign: 'center',
     marginHorizontal: 5,
     fontSize: 58,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#ccc',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -198,7 +205,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#333',
+    backgroundColor: '#ccc',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -207,19 +214,19 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 30,
     borderWidth: 2,
-    borderColor: '#333',
-    backgroundColor: '#fff',
+    borderColor: '#ccc',
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
   },
   playPauseButtonText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 18,
     fontWeight: 'bold',
   },
   resetButtonText: {
-    color: '#333',
-    fontSize: 18,
+    color: '#ccc',
+    fontSize: 12,
     fontWeight: 'bold',
   },
 });

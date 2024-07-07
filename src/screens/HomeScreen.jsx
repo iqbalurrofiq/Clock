@@ -27,7 +27,7 @@ function HomeScreen() {
   return (
     <ImageBackground
       source={{
-        uri: 'https://images.unsplash.com/photo-1482350325005-eda5e677279b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE3fHx8ZW58MHx8fHx8',
+        uri: 'https://images.unsplash.com/photo-1435224654926-ecc9f7fa028c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGdhbGF4eSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D',
       }}
       style={styles.background}>
       <View style={styles.topBar}>
@@ -64,31 +64,31 @@ const styles = StyleSheet.create({
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: 40,
+    padding: 20,
     borderRadius: 20,
     alignItems: 'center',
   },
   subtitle: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#ccc',
     marginBottom: 0,
   },
   date: {
     fontSize: 16,
-    color: '#fff',
+    color: '#ccc',
   },
   day: {
     fontSize: 16,
-    color: '#fff',
+    color: '#ccc',
   },
   month: {
     fontSize: 16,
-    color: '#fff',
+    color: '#ccc',
   },
   location: {
     fontSize: 16,
-    color: '#fff',
+    color: '#ccc',
   },
 });
 
