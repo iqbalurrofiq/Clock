@@ -15,28 +15,31 @@ function TimerScreen() {
   const intervalRef = useRef(null);
 
   const handleHoursChange = text => {
-    const num = parseInt(text, 10);
+    const sanitizedText = text.replace(/[^0-9]/g, '');
+    const num = parseInt(sanitizedText, 10);
     if (!isNaN(num) && num >= 0 && num <= 24) {
-      setHours(text);
-    } else if (text === '') {
+      setHours(sanitizedText);
+    } else if (sanitizedText === '') {
       setHours('');
     }
   };
 
   const handleMinutesChange = text => {
-    const num = parseInt(text, 10);
+    const sanitizedText = text.replace(/[^0-9]/g, '');
+    const num = parseInt(sanitizedText, 10);
     if (!isNaN(num) && num >= 0 && num < 60) {
-      setMinutes(text);
-    } else if (text === '') {
+      setMinutes(sanitizedText);
+    } else if (sanitizedText === '') {
       setMinutes('');
     }
   };
 
   const handleSecondsChange = text => {
-    const num = parseInt(text, 10);
+    const sanitizedText = text.replace(/[^0-9]/g, '');
+    const num = parseInt(sanitizedText, 10);
     if (!isNaN(num) && num >= 0 && num < 60) {
-      setSeconds(text);
-    } else if (text === '') {
+      setSeconds(sanitizedText);
+    } else if (sanitizedText === '') {
       setSeconds('');
     }
   };
@@ -80,6 +83,17 @@ function TimerScreen() {
     setIsRunning(false);
   };
 
+  const resetTimer = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    setHours('');
+    setMinutes('');
+    setSeconds('');
+    setIsRunning(false);
+  };
+
   useEffect(() => {
     return () => {
       if (intervalRef.current) {
@@ -94,15 +108,17 @@ function TimerScreen() {
         <TextInput
           style={styles.input}
           keyboardType="numeric"
-          placeholder="H"
+          placeholder="00"
+          placeholderTextColor="#888" // Warna placeholder
           value={hours}
           onChangeText={handleHoursChange}
-        />
+        /
         <Text>:</Text>
         <TextInput
           style={styles.input}
           keyboardType="numeric"
-          placeholder="M"
+          placeholder="00"
+          placeholderTextColor="#888" // Warna placeholder
           value={minutes}
           onChangeText={handleMinutesChange}
         />
@@ -110,7 +126,8 @@ function TimerScreen() {
         <TextInput
           style={styles.input}
           keyboardType="numeric"
-          placeholder="S"
+          placeholder="00"
+          placeholderTextColor="#888" // Warna placeholder
           value={seconds}
           onChangeText={handleSecondsChange}
         />
@@ -119,11 +136,21 @@ function TimerScreen() {
         <Text>Timer Screen</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={isRunning ? pauseTimer : startTimer}>
-          <Text style={styles.buttonText}>{isRunning ? 'Pause' : 'Play'}</Text>
-        </TouchableOpacity>
+        <View style={styles.leftButtonContainer}>
+          <TouchableOpacity style={styles.resetButton} onPress={resetTimer}>
+            <Text style={styles.resetButtonText}>Reset</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.centerButtonContainer}>
+          <TouchableOpacity
+            style={styles.playPauseButton}
+            onPress={isRunning ? pauseTimer : startTimer}>
+            <Text style={styles.playPauseButtonText}>
+              {isRunning ? 'Pause' : 'Play'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.rightButtonContainer} />
       </View>
     </View>
   );
@@ -139,30 +166,60 @@ const styles = StyleSheet.create({
   input: {
     width: 100,
     height: 100,
-    borderColor: 'gray',
+    borderColor: '#333',
     borderWidth: 1,
     borderRadius: 20,
     textAlign: 'center',
     marginHorizontal: 5,
     fontSize: 58,
     fontWeight: 'bold',
-    color: 'blue',
+    color: '#333',
   },
   buttonContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 50,
+    width: '80%',
+    alignSelf: 'center',
   },
-  button: {
+  leftButtonContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
+  },
+  centerButtonContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  rightButtonContainer: {
+    flex: 1,
+  },
+  playPauseButton: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: 'blue',
+    backgroundColor: '#333',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 24,
+  resetButton: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: '#333',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  playPauseButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  resetButtonText: {
+    color: '#333',
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });
