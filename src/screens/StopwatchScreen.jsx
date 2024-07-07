@@ -15,8 +15,8 @@ function StopwatchScreen() {
     let interval;
     if (isRunning) {
       interval = setInterval(() => {
-        setTime(prevTime => prevTime + 1);
-      }, 1000);
+        setTime(prevTime => prevTime + 10); // Increment by 10 milliseconds
+      }, 10);
     } else if (!isRunning && time !== 0) {
       clearInterval(interval);
     }
@@ -24,11 +24,13 @@ function StopwatchScreen() {
   }, [isRunning]);
 
   const formatTime = time => {
-    const getSeconds = `0${time % 60}`.slice(-2);
-    const minutes = Math.floor(time / 60);
+    const getMilliseconds = `00${time % 1000}`.slice(-3);
+    const seconds = Math.floor(time / 1000);
+    const getSeconds = `0${seconds % 60}`.slice(-2);
+    const minutes = Math.floor(seconds / 60);
     const getMinutes = `0${minutes % 60}`.slice(-2);
-    const getHours = `0${Math.floor(time / 3600)}`.slice(-2);
-    return `${getHours}:${getMinutes}:${getSeconds}`;
+    const getHours = `0${Math.floor(minutes / 60)}`.slice(-2);
+    return `${getHours}:${getMinutes}:${getSeconds}.${getMilliseconds}`;
   };
 
   return (
@@ -42,16 +44,29 @@ function StopwatchScreen() {
           <Text style={styles.timer}>{formatTime(time)}</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[
-              styles.button,
-              isRunning ? styles.pauseButton : styles.playButton,
-            ]}
-            onPress={() => setIsRunning(!isRunning)}>
-            <Text style={styles.buttonText}>
-              {isRunning ? 'Pause' : 'Play'}
-            </Text>
-          </TouchableOpacity>
+          <View style={styles.buttonWrapper}>
+            <TouchableOpacity
+              style={[styles.resetButton]}
+              onPress={() => {
+                setIsRunning(false);
+                setTime(0);
+              }}>
+              <Text style={styles.resetButtonText}>Reset</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonWrapper}>
+            <TouchableOpacity
+              style={[
+                styles.playPauseButton,
+                isRunning ? styles.pauseButton : null,
+              ]}
+              onPress={() => setIsRunning(!isRunning)}>
+              <Text style={styles.playPauseButtonText}>
+                {isRunning ? 'Pause' : 'Play'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonWrapper} />
         </View>
       </View>
     </ImageBackground>
@@ -73,25 +88,45 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 50,
   },
-  button: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+  buttonWrapper: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  playButton: {
+  playPauseButton: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     backgroundColor: 'green',
+    alignItems: 'center',
+    justifyContent: 'center', // Default to play button color
   },
   pauseButton: {
     backgroundColor: 'red',
   },
-  buttonText: {
+  resetButton: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: '#ccc',
+    backgroundColor: '#000',
+    alignItems: 'center',
+    justifyContent: 'center', // Assuming blue for reset button
+  },
+  resetButtonText: {
+    color: '#ccc',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  playPauseButtonText: {
     fontSize: 18,
-    color: 'white',
+    fontWeight: 'bold',
+    color: '#fff', // Assuming white for play/pause button text
   },
 });
 

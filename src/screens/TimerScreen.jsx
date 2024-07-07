@@ -149,7 +149,10 @@ function TimerScreen() {
           </View>
           <View style={styles.centerButtonContainer}>
             <TouchableOpacity
-              style={styles.playPauseButton}
+              style={[
+                styles.playPauseButton,
+                {backgroundColor: isRunning ? 'red' : 'green'},
+              ]}
               onPress={isRunning ? pauseTimer : startTimer}>
               <Text style={styles.playPauseButtonText}>
                 {isRunning ? 'Pause' : 'Play'}
@@ -220,7 +223,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   playPauseButtonText: {
-    color: '#000',
+    color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
   },
