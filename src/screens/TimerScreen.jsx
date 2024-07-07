@@ -139,7 +139,7 @@ function TimerScreen() {
           />
         </View>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Text>Timer Screen</Text>
+          <Text>Clock Application</Text>
         </View>
         <View style={styles.buttonContainer}>
           <View style={styles.leftButtonContainer}>

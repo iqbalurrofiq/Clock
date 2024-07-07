@@ -43,6 +43,9 @@ function StopwatchScreen() {
         <View style={styles.timerContainer}>
           <Text style={styles.timer}>{formatTime(time)}</Text>
         </View>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <Text>Clock Application</Text>
+        </View>
         <View style={styles.buttonContainer}>
           <View style={styles.buttonWrapper}>
             <TouchableOpacity

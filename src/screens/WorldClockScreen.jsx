@@ -9,7 +9,7 @@ function WorldClockScreen() {
       }}
       style={{flex: 1}}>
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>World Clock Screen</Text>
+        <Text>Clock Application</Text>
       </View>
     </ImageBackground>
   );

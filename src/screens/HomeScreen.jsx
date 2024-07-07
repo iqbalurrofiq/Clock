@@ -42,6 +42,7 @@ function HomeScreen() {
       <View style={styles.overlay}>
         {location && <Text style={styles.location}>{location}</Text>}
         <Text style={styles.subtitle}>{currentTime.toLocaleTimeString()}</Text>
+        <Text>Clock Application</Text>
       </View>
     </ImageBackground>
   );
